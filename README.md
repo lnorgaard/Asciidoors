@@ -15,4 +15,4 @@ To play:
 
 <img width="381" alt="screen shot 2016-08-24 at 6 06 36 pm" src="https://cloud.githubusercontent.com/assets/19418255/17953140/b15760ba-6a25-11e6-94d2-238635857f19.png">
 
-<img width="386" alt="screen shot 2016-08-24 at 6 06 50 pm" src="https://cloud.githubusercontent.com/assets/19418255/17953143/b407c76e-6a25-11e6-880b-d8937c4e484b.png">
+<img width="381" alt="screen shot 2016-08-24 at 7 14 48 pm" src="https://cloud.githubusercontent.com/assets/19418255/17954323/18bd8c26-6a2f-11e6-9066-bd271dcea0ca.png">
