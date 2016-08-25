@@ -137,6 +137,15 @@ void Sprite::chooseLeft() {
   --topLeftCornerRow_;
 }
 
+/*
+* \brief 
+* Resets the main character
+*/
+void Sprite::resetSprite() {
+  topLeftCornerColumn_ = 23;
+  topLeftCornerRow_ = 8;
+}
+
 /**
  * \brief 
  * Returns the height of the sprite
@@ -152,6 +161,14 @@ size_t Sprite::getHeight() {
 size_t Sprite::getWidth() {
   return spriteWidth_;
 }
+
+/**
+ * \brief 
+ * Returns the row of the sprite
+ */
+ size_t Sprite::getRow() {
+  return topLeftCornerRow_;
+ }
 
 /**
  * \brief 

@@ -29,8 +29,6 @@ using std::endl;
  */
 void Asciimation::show() {
 
-  const int PAUSE_TIME_IN_MICROSECONDS = 60000;
-
   // Initialize the screen
   initscr();
 
@@ -55,6 +53,24 @@ void Asciimation::show() {
   bool weShouldContinueDisplaying = true;
 
   while (weShouldContinueDisplaying) {
+    // Check to see if the user has entered 'q' to quit yet
+    const char ch = getch();
+    if (ch == 'q') {
+      weShouldContinueDisplaying = false;
+    }
+    if (ch == 'a') {
+      you_->chooseLeft();
+      doorPicker(0);    
+    }
+    if (ch == 's') {
+      you_->chooseMiddle();
+      doorPicker(1);
+    }
+    if (ch == 'd') {
+      you_->chooseRight();
+      doorPicker(2);
+    }
+
     // Call the function to prepare new display contents
     prepareBufferForDisplay();
 
@@ -63,51 +79,6 @@ void Asciimation::show() {
 
     // Draw the screen with ncurses
     refresh();
-
-    // Sleep between updates
-    usleep(PAUSE_TIME_IN_MICROSECONDS);
-
-    // Check to see if the user has entered 'q' to quit yet
-    const char ch = getch();
-    if (ch == 'q') {
-      weShouldContinueDisplaying = false;
-    }
-    if (ch == 'a') {
-      you_->chooseLeft();
-      std::random_device rd;
-      std::mt19937 gen(rd());
-      std::uniform_int_distribution<> dis(0, 2);
-      doors_[dis(gen)]->setString(doorLibrary_[2]);
-      if (dis(gen) != 0) {
-        ++score_;
-      } else {
-        --lives_;
-      }
-    }
-    if (ch == 's') {
-      you_->chooseMiddle();
-      std::random_device rd;
-      std::mt19937 gen(rd());
-      std::uniform_int_distribution<> dis(0, 2);
-      doors_[dis(gen)]->setString(doorLibrary_[2]);
-      if (dis(gen) != 1) {
-        ++score_;
-      } else {
-        --lives_;
-      }
-    }
-    if (ch == 'd') {
-      you_->chooseRight();
-      std::random_device rd;
-      std::mt19937 gen(rd());
-      std::uniform_int_distribution<> dis(0, 2);
-      doors_[dis(gen)]->setString(doorLibrary_[2]);
-      if (dis(gen) != 2) {
-        ++score_;
-      } else {
-        --lives_;
-      }
-    }
   }
 
   // Put the cursor back to beginning of the last row of the terminal, where
@@ -116,6 +87,26 @@ void Asciimation::show() {
 
   // Restore the saved shell terminal before exiting.
   endwin();
+}
+
+/**
+ * \brief 
+ * Given the door number chosen, randomly determines whether or not 
+ * it was the right door
+ */
+void Asciimation::doorPicker(int doorNumber) {
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> dis(0, 2);
+  int randomDoor = dis(gen);
+  doors_[doorNumber]->setString(doorLibrary_[1]);
+  doors_[randomDoor]->setString(doorLibrary_[2]);
+  if (randomDoor != doorNumber) {
+    ++score_;
+  } else {
+    you_->setString("sprites/scaredperson.txt");
+    --lives_;
+  }
 }
 
 /**
@@ -195,6 +186,14 @@ void Asciimation::prepareBufferForDisplay() {
     screenStored_[i + 15] = livesText[i];
   }
 
+  if (you_->getRow() == 8) {
+    const int PAUSE_TIME_IN_MICROSECONDS = 100000;
+    // Sleep between updates
+    for (int i = 0; i < 10; ++i) {
+      usleep(PAUSE_TIME_IN_MICROSECONDS);
+    }
+  }
+
   // Insert the doors into the buffer
   for (size_t spriteRow = 0; spriteRow < getSpriteHeight(doors_[0]); ++spriteRow) {
     for (size_t spriteCol = 0; spriteCol < getSpriteWidth(doors_[0]); ++spriteCol) {
@@ -226,6 +225,13 @@ void Asciimation::prepareBufferForDisplay() {
         
     }
   }
+
+  // Reset the doors and main character
+  for (int doors = 0; doors < 3; ++doors) {
+    doors_[doors]->setString(doorLibrary_[0]);
+  }
+  you_->setString("sprites/person.txt");
+  you_->resetSprite();
 } 
 
 /**

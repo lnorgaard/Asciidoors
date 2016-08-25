@@ -35,6 +35,13 @@ public:
    * \post The screen is destroyed.
    */
   void show();
+
+  /**
+   * \brief 
+   * Given the door number chosen, randomly determines whether or not 
+   * it was the right door
+   */
+  void doorPicker(int doorNumber);
   
   /**
    * \brief 

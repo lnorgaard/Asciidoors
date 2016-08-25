@@ -88,6 +88,12 @@ public:
    */
    void chooseLeft();
 
+   /*
+   * \brief 
+   * Resets the main character
+   */
+   void resetSprite();
+
    /**
     * \brief 
     * Returns the height of the sprite
@@ -99,6 +105,12 @@ public:
     * Returns the width of the sprite
     */
    size_t getWidth();
+
+   /**
+    * \brief 
+    * Returns the row of the sprite
+    */
+   size_t getRow();
 
    /**
    * \brief 
