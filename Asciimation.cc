@@ -60,15 +60,42 @@ void Asciimation::show() {
     }
     if (ch == 'a') {
       you_->chooseLeft();
-      doorPicker(0);    
+      doorPicker(0); 
+      if (lives_ == 0) {
+        const int PAUSE_TIME_IN_MICROSECONDS = 60000;
+        // Sleep between updates
+        for (int i = 0; i < 100; ++i) {
+          cout << "You Lose" << endl;
+          usleep(PAUSE_TIME_IN_MICROSECONDS);
+        }
+        weShouldContinueDisplaying = false;
+      }   
     }
     if (ch == 's') {
       you_->chooseMiddle();
       doorPicker(1);
+      if (lives_ == 0) {
+        const int PAUSE_TIME_IN_MICROSECONDS = 60000;
+        // Sleep between updates
+        for (int i = 0; i < 100; ++i) {
+          cout << "You Lose" << endl;
+          usleep(PAUSE_TIME_IN_MICROSECONDS);
+        }
+        weShouldContinueDisplaying = false;
+      }
     }
     if (ch == 'd') {
       you_->chooseRight();
       doorPicker(2);
+      if (lives_ == 0) {
+        const int PAUSE_TIME_IN_MICROSECONDS = 60000;
+        // Sleep between updates
+        for (int i = 0; i < 100; ++i) {
+          cout << "You Lose" << endl;
+          usleep(PAUSE_TIME_IN_MICROSECONDS);
+        }
+        weShouldContinueDisplaying = false;
+      }
     }
 
     // Call the function to prepare new display contents
